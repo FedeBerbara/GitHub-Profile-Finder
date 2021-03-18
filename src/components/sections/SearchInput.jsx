@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import {Stack, Input, Image, Box} from '@chakra-ui/react';
-import SearchButton from '../ui/SearchButton';
-import Logo from '../static/github1.png';
+import {Stack, Input, Image, Box} from '@chakra-ui/react'
+import SearchButton from '../ui/SearchButton'
+import Logo from '../static/github1.png'
 import Swal from 'sweetalert2'
 
 const SearchInput = () => {
@@ -18,6 +18,12 @@ const SearchInput = () => {
         }));
     }
 
+    const fetchData = async (value) => {
+        const response = await fetch (`https://api.github.com/user/${value}`);
+        const data = await response.json()
+        console.log(data);
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
 
@@ -29,6 +35,7 @@ const SearchInput = () => {
                 timer: 2500,
             });
         } else {
+            fetchData(profileData);
             console.log(profileData);
             setProfileData({
                 query: ''

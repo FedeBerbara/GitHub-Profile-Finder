@@ -7,7 +7,7 @@ const ProfileCard = () => {
             width="80%" 
             alignSelf="center" 
             padding={9} 
-            margin={8} 
+            margin={9} 
             borderRadius="xl"
             spacing={['10', '180']} 
             justifyContent="center" 
