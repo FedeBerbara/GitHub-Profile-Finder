@@ -3,31 +3,34 @@ import {Stack, Input, Image, Box} from '@chakra-ui/react'
 import SearchButton from '../ui/SearchButton'
 import Logo from '../static/github1.png'
 import Swal from 'sweetalert2'
+import {searchProfile} from '../../service/profileService';
 
 const SearchInput = () => {
 
-    const [profileData, setProfileData] = useState({
-        query: ''
+    const [profileName, setProfileName] = useState({
+        data: '',
     });
 
     const handelChange = e => {
         const { name, value } = e.target;
-        setProfileData(prevState => ({
+        setProfileName(prevState => ({
             ...prevState,
             [name] : value
-        }));
+        }))
     }
 
-    const fetchData = async (value) => {
-        const response = await fetch (`https://api.github.com/user/${value}`);
-        const data = await response.json()
-        console.log(data);
-    }
+    // const fetchData = async (profileName) => {
+    //     const response = await fetch (`https://api.github.com/users/${profileName}`);
+    //     const data = await response.json()
+    //     console.log(data);
+    // }
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        if (profileData.query === '') {
+        console.log(profileName);
+
+        if (profileName.query === '') {
             Swal.fire({
                 title: 'Stop!',
                 text: 'I will not be able to search the profile if you do not write it',
@@ -35,13 +38,12 @@ const SearchInput = () => {
                 timer: 2500,
             });
         } else {
-            fetchData(profileData);
-            console.log(profileData);
-            setProfileData({
+            searchProfile(profileName);
+            setProfileName({
                 query: ''
-            })
+            });
         }
-    }
+    };
 
     return (
         <>
@@ -51,7 +53,7 @@ const SearchInput = () => {
                     <Stack direction="row" spacing={0} width="100%">
                         <Input name="query" 
                             onChange={handelChange}
-                            value={profileData.query} 
+                            value={profileName.data} 
                             size="md" 
                             backgroundColor="#fff"
                             focusBorderColor="green.400"
